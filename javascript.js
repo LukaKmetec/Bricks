@@ -69,6 +69,7 @@ function drawIt() {
 
         clear();
         circle(x, y, 10);
+        
         //premik ploščice levo in desno
         if (rightDown) {
             if ((paddlex + paddlew) < WIDTH) {
@@ -84,20 +85,21 @@ function drawIt() {
                 paddlex = 0;
             }
         }
-        ctx.rect(paddlex, HEIGHT - paddleh, paddlew, paddleh);
+        rect(paddlex, HEIGHT - paddleh, paddlew, paddleh);
         //riši opeke
         
         for (i = 0; i < NROWS; i++) {
             for (j = 0; j < NCOLS; j++) {
+                let x=Math.random()*5;
                 if (bricks[i][j] == 1) {
-                    ctx.rect((j * (BRICKWIDTH + PADDING)) + PADDING,
+                    rect((j * (BRICKWIDTH + PADDING)) + PADDING,
                         (i * (BRICKHEIGHT + PADDING)) + PADDING,
                         BRICKWIDTH, BRICKHEIGHT);
-                        ctx.fillStyle="red";
-                        ctx.fill();
+                        
                 }
             }
         }
+        
 
         rowheight = BRICKHEIGHT + PADDING  / 2; //Smo zadeli opeko?
         colwidth = BRICKWIDTH + PADDING  / 2;
