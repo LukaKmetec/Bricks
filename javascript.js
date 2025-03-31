@@ -1,8 +1,8 @@
 function drawIt() {
     var x = 700;
     var y = 300;
-    var dx = 5;
-    var dy = 8;
+    var dx = 3;
+    var dy = 5;
     var WIDTH;
     var HEIGHT;
     var r = 10;
@@ -47,7 +47,7 @@ function drawIt() {
     //END LIBRARY CODE
     function init_paddle() {
         paddlex = WIDTH/2;
-        paddleh = 10;
+        paddleh = 15;
         paddlew = 150;
     }
     //nastavljanje leve in desne tipke
@@ -72,26 +72,29 @@ function drawIt() {
         //premik ploščice levo in desno
         if (rightDown) {
             if ((paddlex + paddlew) < WIDTH) {
-                paddlex += 10;
+                paddlex += 7;
             } else {
                 paddlex = WIDTH - paddlew;
             }
         }
         else if (leftDown) {
             if (paddlex > 0) {
-                paddlex -= 10;
+                paddlex -= 7;
             } else {
                 paddlex = 0;
             }
         }
-        rect(paddlex, HEIGHT - paddleh, paddlew, paddleh);
+        ctx.rect(paddlex, HEIGHT - paddleh, paddlew, paddleh);
         //riši opeke
+        
         for (i = 0; i < NROWS; i++) {
             for (j = 0; j < NCOLS; j++) {
                 if (bricks[i][j] == 1) {
-                    rect((j * (BRICKWIDTH + PADDING)) + PADDING,
+                    ctx.rect((j * (BRICKWIDTH + PADDING)) + PADDING,
                         (i * (BRICKHEIGHT + PADDING)) + PADDING,
                         BRICKWIDTH, BRICKHEIGHT);
+                        ctx.fillStyle="red";
+                        ctx.fill();
                 }
             }
         }
@@ -121,7 +124,7 @@ function drawIt() {
     }
 
     function initbricks() { //inicializacija opek - polnjenje v tabelo
-        NROWS = 10;
+        NROWS = 7;
         NCOLS = 5;
         BRICKWIDTH = (WIDTH / NCOLS) - 1;
         BRICKHEIGHT = 15;
