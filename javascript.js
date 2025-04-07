@@ -7,6 +7,7 @@ function drawIt() {
     var HEIGHT;
     var r = 10;
     var bricks;
+    var bricks1;
     var NROWS;
     var NCOLS;
     var BRICKWIDTH;
@@ -19,6 +20,7 @@ function drawIt() {
     var paddlex;
     var paddleh;
     var paddlew;
+    var flag = false;
 
     function init() {
         ctx = $('#canvas')[0].getContext("2d");
@@ -46,7 +48,7 @@ function drawIt() {
     }
     //END LIBRARY CODE
     function init_paddle() {
-        paddlex = WIDTH/2;
+        paddlex = WIDTH / 2;
         paddleh = 15;
         paddlew = 150;
     }
@@ -65,11 +67,19 @@ function drawIt() {
     $(document).keydown(onKeyDown);
     $(document).keyup(onKeyUp);
 
+    document.addEventListener("mousemove", mouseMoveHandler, false);
+    function mouseMoveHandler(e) {
+        var relativeX = e.clientX - canvas.offsetLeft;
+        if (relativeX > 0 && relativeX < canvas.width) {
+            paddlex = relativeX - paddlew / 2;
+        }
+    }
+    
     function draw() {
 
         clear();
         circle(x, y, 10);
-        
+
         //premik ploščice levo in desno
         if (rightDown) {
             if ((paddlex + paddlew) < WIDTH) {
@@ -87,58 +97,75 @@ function drawIt() {
         }
         rect(paddlex, HEIGHT - paddleh, paddlew, paddleh);
         //riši opeke
-        
         for (i = 0; i < NROWS; i++) {
             for (j = 0; j < NCOLS; j++) {
-                let x=Math.random()*5;
                 if (bricks[i][j] == 1) {
+                    ctx.fillStyle=bricks1[i][j];
                     rect((j * (BRICKWIDTH + PADDING)) + PADDING,
                         (i * (BRICKHEIGHT + PADDING)) + PADDING,
                         BRICKWIDTH, BRICKHEIGHT);
-                        
                 }
             }
         }
-        
+        ctx.fillStyle = "black";
 
-        rowheight = BRICKHEIGHT + PADDING  / 2; //Smo zadeli opeko?
-        colwidth = BRICKWIDTH + PADDING  / 2;
+        rowheight = BRICKHEIGHT + PADDING / 2; //Smo zadeli opeko?
+        colwidth = BRICKWIDTH + PADDING / 2;
         row = Math.floor(y / rowheight);
         col = Math.floor(x / colwidth);
         //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
         if (y < NROWS * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
             dy = -dy; bricks[row][col] = 0;
         }
-        if (x + dx > WIDTH - r || x + dx <  r)
+        if (x + dx > WIDTH - r || x + dx < r)
             dx = -dx;
         if (y + dy < 0 + r)
             dy = -dy;
-        else if (y + dy > HEIGHT - r ) {
-            if (x > paddlex && x < paddlex + paddlew){
+        else if (y + dy > HEIGHT - r) {
+            if (x > paddlex && x < paddlex + paddlew) {
                 dy = -dy;
-                dx = 8 * ((x-(paddlex+paddlew/2))/paddlew);
+                dx = 8 * ((x - (paddlex + paddlew / 2)) / paddlew);
             }
             else if (y + dy > HEIGHT - r)
                 clearInterval(intervalId);
+            console.log("Konec");
         }
         x += dx;
         y += dy;
     }
 
     function initbricks() { //inicializacija opek - polnjenje v tabelo
+        var barv;
         NROWS = 7;
         NCOLS = 5;
         BRICKWIDTH = (WIDTH / NCOLS) - 1;
         BRICKHEIGHT = 15;
         PADDING = 1;
         bricks = new Array(NROWS);
+        bricks1 = new Array(NROWS);
         for (var i = 0; i < NROWS; i++) {
             bricks[i] = new Array(NCOLS);
+            bricks1[i] = new Array(NCOLS);
             for (var j = 0; j < NCOLS; j++) {
+                let rand = Math.random() * 100;
+                console.log(rand);
+                if (rand >= 95) {
+                    barv = "red";
+                }
+                else if(rand<95 && rand>=85){
+                    barv = "blue"
+                }
+                 else {
+                    barv = "black";
+                }
                 bricks[i][j] = 1;
+                bricks1[i][j] = barv;
             }
         }
     }
+
+
+
     init();
     init_paddle();
     initbricks();
