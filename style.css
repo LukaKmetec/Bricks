@@ -31,3 +31,10 @@ h1{
     -webkit-background-clip: text;
     color: transparent;
 }
+#tocke{
+    margin: auto;
+    color: antiquewhite;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}

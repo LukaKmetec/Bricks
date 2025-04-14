@@ -117,6 +117,11 @@ function drawIt() {
         if (y < NROWS * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
             dy = -dy; bricks[row][col] = 0;
         }
+        if (y < NROWS * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
+            dy = -dy; bricks[row][col] = 0;
+            tocke += 1;
+            $("#tocke").html(tocke);
+        }
         if (x + dx > WIDTH - r || x + dx < r)
             dx = -dx;
         if (y + dy < 0 + r)
@@ -152,11 +157,17 @@ function drawIt() {
                 if (rand >= 95) {
                     barv = "red";
                 }
-                else if(rand<95 && rand>=85){
-                    barv = "blue"
+                else if(rand<95 && rand>=86){
+                    barv = "blue";
+                }
+                else if(rand<85 && rand>=75){
+                    barv="green";
+                }
+                else if(barv<74 && barv>=54){
+                    barv="yellow";
                 }
                  else {
-                    barv = "black";
+                    barv = "purple";
                 }
                 bricks[i][j] = 1;
                 bricks1[i][j] = barv;
