@@ -6,6 +6,7 @@ function drawIt() {
     var WIDTH;
     var HEIGHT;
     var r = 10;
+    var tocke;
     var bricks;
     var bricks1;
     var NROWS;
@@ -26,6 +27,8 @@ function drawIt() {
         ctx = $('#canvas')[0].getContext("2d");
         WIDTH = $("#canvas").width();
         HEIGHT = $("#canvas").height();
+        tocke=0;
+        $("#tocke").html(tocke);
         return intervalId = setInterval(draw, 10);
     }
 
@@ -46,13 +49,13 @@ function drawIt() {
     function clear() {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
     }
-    //END LIBRARY CODE
+
     function init_paddle() {
         paddlex = WIDTH / 2;
         paddleh = 15;
         paddlew = 150;
     }
-    //nastavljanje leve in desne tipke
+
     function onKeyDown(evt) {
         if (evt.keyCode == 39)
             rightDown = true;
@@ -80,7 +83,7 @@ function drawIt() {
         clear();
         circle(x, y, 10);
 
-        //premik ploščice levo in desno
+
         if (rightDown) {
             if ((paddlex + paddlew) < WIDTH) {
                 paddlex += 7;
@@ -96,7 +99,7 @@ function drawIt() {
             }
         }
         rect(paddlex, HEIGHT - paddleh, paddlew, paddleh);
-        //riši opeke
+
         for (i = 0; i < NROWS; i++) {
             for (j = 0; j < NCOLS; j++) {
                 if (bricks[i][j] == 1) {
@@ -109,14 +112,12 @@ function drawIt() {
         }
         ctx.fillStyle = "black";
 
-        rowheight = BRICKHEIGHT + PADDING / 2; //Smo zadeli opeko?
+        rowheight = BRICKHEIGHT + PADDING / 2; 
         colwidth = BRICKWIDTH + PADDING / 2;
         row = Math.floor(y / rowheight);
         col = Math.floor(x / colwidth);
-        //Če smo zadeli opeko, vrni povratno kroglo in označi v tabeli, da opeke ni več
-        if (y < NROWS * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
-            dy = -dy; bricks[row][col] = 0;
-        }
+
+        
         if (y < NROWS * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
             dy = -dy; bricks[row][col] = 0;
             tocke += 1;
@@ -139,7 +140,7 @@ function drawIt() {
         y += dy;
     }
 
-    function initbricks() { //inicializacija opek - polnjenje v tabelo
+    function initbricks() { 
         var barv;
         NROWS = 7;
         NCOLS = 5;
