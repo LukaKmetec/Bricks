@@ -1,8 +1,8 @@
 function drawIt() {
-    var x = 700;
-    var y = 300;
-    var dx = 3;
-    var dy = 5;
+    var x = 300;
+    var y = 200;
+    var dx = 2;
+    var dy = 4;
     var WIDTH;
     var HEIGHT;
     var r = 10;
@@ -21,8 +21,9 @@ function drawIt() {
     var paddlex;
     var paddleh;
     var paddlew;
+    var polja=0;
     var flag = false;
-
+    
     function init() {
         ctx = $('#canvas')[0].getContext("2d");
         WIDTH = $("#canvas").width();
@@ -77,9 +78,20 @@ function drawIt() {
             paddlex = relativeX - paddlew / 2;
         }
     }
+
+    function konec(){
+        if(polja==35){
+            clearInterval(intervalId); 
+            Swal.fire({
+                title: "Zmaga!",
+                text: "Zadel si vse brick-e",
+                icon: "success"
+              });       
+        }
+    }
     
     function draw() {
-
+        konec();
         clear();
         circle(x, y, 10);
 
@@ -119,10 +131,26 @@ function drawIt() {
 
         
         if (y < NROWS * rowheight && row >= 0 && col >= 0 && bricks[row][col] == 1) {
-            dy = -dy; bricks[row][col] = 0;
-            tocke += 1;
+            dy = -dy; bricks[row][col] = 0; polja +=1;
+            if(bricks2[row][col]==5){
+                tocke +=5;
+            }
+            else if(bricks2[row][col]==4){
+                tocke +=4;
+            }
+            else if(bricks2[row][col]==3){
+                tocke +=3;
+            }
+            else if(bricks2[row][col]==2){
+                tocke +=2;
+            }
+            else if(bricks2[row][col]==1){
+                tocke +=1;
+            }
+            
             $("#tocke").html(tocke);
         }
+        
         if (x + dx > WIDTH - r || x + dx < r)
             dx = -dx;
         if (y + dy < 0 + r)
@@ -132,16 +160,24 @@ function drawIt() {
                 dy = -dy;
                 dx = 8 * ((x - (paddlex + paddlew / 2)) / paddlew);
             }
-            else if (y + dy > HEIGHT - r)
+            else if (y + dy > HEIGHT - r){
                 clearInterval(intervalId);
-            console.log("Konec");
+                Swal.fire({
+                    title: "Izgubil si!",
+                    text: "Žogica ti je ušla",
+                    icon: "error"
+                  }); 
+            }
         }
+        
         x += dx;
         y += dy;
+        
     }
 
     function initbricks() { 
         var barv;
+        var toc = 0;
         NROWS = 7;
         NCOLS = 5;
         BRICKWIDTH = (WIDTH / NCOLS) - 1;
@@ -149,29 +185,37 @@ function drawIt() {
         PADDING = 1;
         bricks = new Array(NROWS);
         bricks1 = new Array(NROWS);
+        bricks2 = new Array(NROWS);
         for (var i = 0; i < NROWS; i++) {
             bricks[i] = new Array(NCOLS);
             bricks1[i] = new Array(NCOLS);
+            bricks2[i] = new Array(NCOLS);
             for (var j = 0; j < NCOLS; j++) {
                 let rand = Math.random() * 100;
                 console.log(rand);
                 if (rand >= 95) {
                     barv = "red";
+                    toc = 5;
                 }
                 else if(rand<95 && rand>=86){
                     barv = "blue";
+                    toc = 4;
                 }
                 else if(rand<85 && rand>=75){
                     barv="green";
+                    toc = 3;
                 }
-                else if(barv<74 && barv>=54){
+                else if(barv<74 && barv>=32){
                     barv="yellow";
+                    toc = 2;
                 }
                  else {
                     barv = "purple";
+                    toc = 1;
                 }
                 bricks[i][j] = 1;
                 bricks1[i][j] = barv;
+                bricks2[i][j] = toc;  
             }
         }
     }
@@ -181,4 +225,5 @@ function drawIt() {
     init();
     init_paddle();
     initbricks();
+    
 }

@@ -1,6 +1,7 @@
 <html>
     <link rel="stylesheet" href="style.css">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="jquery.js"></script>
     <script src="javascript.js">
     </script>
@@ -8,8 +9,15 @@
 
 <body onload="drawIt()">
     <div class="naslov"><h1 class="naslov1">Rainbow bricks</h1></div>
-    <canvas id="canvas" width="1000" height="600" style="border: 3px solid silver;"></canvas>
-    <div class="tockice"><p>Točke: <mark id="tocke" style="color: antiquewhite;">0</mark></p></div>
+    <canvas id="canvas" width="800" height="400" style="border: 3px solid silver;"></canvas>
+    <div class="tockice">
+    <table class="tabelca">
+        <tr>
+            <td>Točke</td>
+            <td><p id="tocke">0</p></td>
+        </tr>
+    </table>
+</div>
 </body>
 
 </html>
