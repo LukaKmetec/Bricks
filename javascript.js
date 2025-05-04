@@ -23,6 +23,7 @@ function drawIt() {
     var paddlew;
     var polja=0;
     var flag = false;
+    let pavza=false;
     
     function init() {
         ctx = $('#canvas')[0].getContext("2d");
@@ -173,6 +174,24 @@ function drawIt() {
         x += dx;
         y += dy;
         
+        $("#pavza").click(function () {
+            if (pavza) {
+                pavza = false;
+                intervalId = setInterval(draw, 10);
+            } else {
+                pavza = true;
+                clearInterval(intervalId);
+            }
+        });
+    }
+    function stop(){
+        clearInterval(intervalId);
+    }
+    function nadaljuj(){
+        ctx = $('#canvas')[0].getContext("2d");
+        WIDTH = $("#canvas").width();
+        HEIGHT = $("#canvas").height();
+        return intervalId = setInterval(draw, 10);
     }
 
     function initbricks() { 
@@ -219,11 +238,20 @@ function drawIt() {
             }
         }
     }
-
+    
 
 
     init();
     init_paddle();
     initbricks();
     
+}
+function credit(){
+    Swal.fire({
+        title: 'Avtor',
+        text: 'Luka Kmetec, 4.Rb',
+        icon: 'info',
+        confirmButtonText: 'OK',
+    
+    });
 }

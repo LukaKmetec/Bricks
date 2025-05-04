@@ -12,12 +12,13 @@ body{
 }
 .naslov{
     margin: auto;
-    font-size: 40px;
+    font-size: 50px;
     font-family: Arial, Helvetica, sans-serif;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-    background-color: beige;
+    margin-top: 70px;
+    margin-bottom: 70px;
+    background-color: rgba(255, 255, 255, 0);
     border-radius: 100px;
     width: 800px;
     height: 100px;
@@ -35,7 +36,8 @@ h1{
     color: transparent;
 }
 .tockice{
-    height: 40px;
+    display: flex;
+    height: 50px;
     width: 700px;
     background-color: white;
     margin: auto;
@@ -45,13 +47,36 @@ h1{
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     color: black;
+    border-radius: 20px;
 }
-#tocke{
-    display: inline;
-}
+
 .tabelca{
     text-align: center;
     margin: auto;
     font-size: 24px;
 
+}
+
+#pavza{
+    margin: auto;
+    float: left;
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    border: none;
+    background-color: red;
+    color: white;
+    font-size: 15px;
+}
+
+#nadaljuj{
+    margin: auto;
+    float: right;
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    border: none;
+    background-color: green;
+    color: white;
+    font-size: 15px;
 }
